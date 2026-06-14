@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GemScan - Identificador de Gemas</title>
+  
+  <!-- Configurações PWA para Android -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#C79A3C">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <!-- Fontes Google Fonts (Cinzel para títulos e Inter para o corpo) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS via CDN para renderizar a interface sem precisar instalar nada -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Ícones Lucide -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    .font-serif { font-family: 'Cinzel', serif; }
+    .font-sans { font-family: 'Inter', sans-serif; }
+    
+    /* Animação Gem Glow para as pedras */
+    @keyframes gemGlow {
+      0%, 100% { box-shadow: 0 0 8px 2px rgba(245, 158, 11, 0.2); }
+      50%       { box-shadow: 0 0 20px 6px rgba(245, 158, 11, 0.4); }
+    }
+    .gem-glow { animation: gemGlow 2s ease-in-out infinite; }
+
+    /* Transição suave de entrada */
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .fade-in-up { animation: fadeInUp 0.35s ease-out forwards; }
+  </style>
+</head>
+<body class="bg-[#0f1115] text-slate-100 font-sans pb-20">
+
+  <!-- O aplicativo React/Vanilla será injetado aqui -->
+  <div id="app"></div>
+
+  <!-- Carrega a lógica do aplicativo -->
+  <script src="app.js"></script>
+
+  <!-- Registro do Service Worker para permitir a instalação no Android -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js')
+          .then(reg => console.log('GemScan PWA Ativo com sucesso!'))
+          .catch(err => console.log('Erro ao registrar PWA:', err));
+      });
+    }
+  </script>
+</body>
+</html>
